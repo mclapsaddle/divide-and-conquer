@@ -1,0 +1,104 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class DivideAndConquer {
+    public static void main(String[] args) {
+        int p;
+        int r;
+        int q;
+        String paragraph;
+      
+        System.out.println("Enter Paragraph");
+        Scanner input = new Scanner(System.in);
+        paragraph = input.nextLine();
+        String arr[] = paragraph.split(" ");
+
+
+        p = 0;
+        r = arr.length - 1;
+        int length = r;
+        mergeSort(arr, p, r, length);
+    }
+
+    public static void mergeSort(String[] arr, int p, int r, int length) {
+        int q;
+        if (p < r) {
+            q = (p + r) / 2;
+            mergeSort(arr, p, q, length);
+            mergeSort(arr, q + 1, r, length);
+            merge(arr, p, q, r, length);
+        }
+    }
+
+    public static String[] merge(String arr[], int p, int q, int r, int length) {
+        int n1;
+        int n2;
+        String[] A = new String[arr.length];
+        n1 = q - p + 1;
+        n2 = r - q;
+        String[] L = new String[n1 + 1];
+        String[] R = new String[n2 + 1];
+
+
+
+        for (int i = 1; i <= n1; i++) {
+            L[i] = arr[p + (i - 1)];
+        }
+        for (int j = 1; j <= n2; j++) {
+            R[j] = arr[q + j];
+        }
+        int i = 1;
+        int j = 1;
+        byte[] num1 = new byte[0];
+        byte[] num2 = new byte[0];
+
+        A[length] = null;
+
+        for (int k = 0; k <= A.length; k++) {
+            if (i < L.length && j < R.length) {
+                num1 = L[i].getBytes();
+                num2 = R[j].getBytes();
+            }
+                if (num1.length >= num2.length) {
+
+                            for (int l = 0; l <= num1.length - 1; l++) {
+                                if(i >= L.length || j >= R.length) {
+                                    break;
+                                }
+                               else if (num1[l] <= num2[l]) {
+                                    A[k] = L[i];
+                                    i++;
+                                    k++;
+
+                                } else if (num2[l] < num1[l]) {
+                                    A[k] = R[j];
+                                    j++;
+                                    k++;
+                                }
+                            }
+                } else if (num1.length < num2.length) {
+                    for (int l = 0; l <= num2.length; l++) {
+                        if(i >= L.length || j >= R.length) {
+
+                        }
+                       else if (num1[l] <= num2[l]) {
+                            A[k] = L[i];
+                            i++;
+                            k++;
+                        }
+                     else if (num2[l] < num1[l]) {
+                            A[k] = R[j];
+                            j++;
+                            k++;
+                        }
+                    }
+
+                }
+
+            }
+        System.out.println(Arrays.toString(A));
+            return arr;
+        }
+
+    }
